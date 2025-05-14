@@ -7,9 +7,11 @@ body {
 }
 
 .calc {
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(146, 146, 146);
+    background-color: rgb(0, 0, 0);
+    padding: 2px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(174, 174, 174);
 }
 
 .row {
@@ -23,26 +25,25 @@ body {
     align-items: center;
     font-family: monospace;
     font-size: xx-large;
+    color: antiquewhite;
+    padding: 2px;
 }
 
-#basic {
+.button, .button-top, .button-operator, .button-num {
     height: 50px;
     width: 50px;
     margin: 1px;
 }
 
-#top {
-    height: 50px;
-    width: 50px;
-    margin: 1px;
+.button-num {
+    background-color: antiquewhite;
+}
+
+.button-top {
     background-color: steelblue;
-    
 }
 
-#operator {
-    height: 50px;
-    width: 50px;
-    margin: 1px;
+.button-operator {
     background-color: rgb(255, 98, 40);
 }
 

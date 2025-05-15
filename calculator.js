@@ -1,3 +1,4 @@
+// Operator functions
 function add(x, y) {
     return x + y;
 };
@@ -14,6 +15,12 @@ function divide(x, y) {
     return x / y;
 };
 
+function percentage(num) {
+    return num / 100;
+}
+
+
+// Operation delegation
 function operate(operator, numOne, numTwo) {
     switch (operator) {
         case "+":
@@ -28,49 +35,110 @@ function operate(operator, numOne, numTwo) {
 };
 
 function main() {
-    //let currentNum = "";
-    let currentOperator = "";
-
     const display = document.querySelector(".display");
     const buttonNums = document.querySelectorAll(".button-num");
     const buttonOperators = document.querySelectorAll(".button-operator");
     const buttonFunctions = document.querySelectorAll(".button-top");
 
+    let currentOperator = "";
+    let lastOperator = "";
+    let currentResult = "";
+    let numOne = "";
+    let numTwo = "";
+
+    // Number button listener
     buttonNums.forEach(button => {
         button.addEventListener("click", (e) => {
             switch (e.target.id) {
                 case "zero":
-                    display.textContent += "0";
+                    if (numOne == "" || currentOperator == "") {
+                        numOne += "0";
+                        display.textContent = numOne;
+                    } else {
+                        numTwo += "0";
+                        display.textContent = numTwo;
+                    };
                     break;
                 case "one":
-                    display.textContent += "1";
+                    if (numOne == "" || currentOperator == "") {
+                        numOne += "1";
+                        display.textContent = numOne;
+                    } else {
+                        numTwo += "1";
+                        display.textContent = numTwo;
+                    };
                     break;
                 case "two":
-                    display.textContent += "2";
+                    if (numOne == "" || currentOperator == "") {
+                        numOne += "2";
+                        display.textContent = numOne;
+                    } else {
+                        numTwo += "2";
+                        display.textContent = numTwo;
+                    };
                     break;
                 case "three":
-                    display.textContent += "3";
+                    if (numOne == "" || currentOperator == "") {
+                        numOne += "3";
+                        display.textContent = numOne;
+                    } else {
+                        numTwo += "3";
+                        display.textContent = numTwo;
+                    };
                     break;
                 case "four":
-                    display.textContent += "4";
+                    if (numOne == "" || currentOperator == "") {
+                        numOne += "4";
+                        display.textContent = numOne;
+                    } else {
+                        numTwo += "4";
+                        display.textContent = numTwo;
+                    };
                     break;
                 case "five":
-                    display.textContent += "5";
+                    if (numOne == "" || currentOperator == "") {
+                        numOne += "5";
+                        display.textContent = numOne;
+                    } else {
+                        numTwo += "5";
+                        display.textContent = numTwo;
+                    };
                     break;
                 case "six":
-                    display.textContent += "6";
+                    if (numOne == "" || currentOperator == "") {
+                        numOne += "6";
+                        display.textContent = numOne;
+                    } else {
+                        numTwo += "6";
+                        display.textContent = numTwo;
+                    };
                     break;
                 case "seven":
-                    display.textContent += "7";
+                    if (numOne == "" || currentOperator == "") {
+                        numOne += "7";
+                        display.textContent = numOne;
+                    } else {
+                        numTwo += "7";
+                        display.textContent = numTwo;
+                    };
                     break;
                 case "eight":
-                    display.textContent += "8";
+                    if (numOne == "" || currentOperator == "") {
+                        numOne += "8";
+                        display.textContent = numOne;
+                    } else {
+                        numTwo += "8";
+                        display.textContent = numTwo;
+                    };
                     break;
                 case "nine":
-                    display.textContent += "9";
-                    break;
-                case "zero":
-                    display.textContent += "0";
+                    if (numOne == "" || currentOperator == "") {
+                        numOne += "9";
+                        display.textContent = numOne;
+                    } else {
+                        numTwo += "9";
+                        display.textContent = numTwo;
+                    };
                     break;
                 case "dot":
                     if (display.textContent.includes(".")) {
@@ -84,30 +152,141 @@ function main() {
         });
     });
 
+    // Operator button listener
     buttonOperators.forEach(button => {
         button.addEventListener("click", (e) => {
             switch (e.target.id) {
-                case "+":
-                    currentOperator = "+";
+                case "plus":
+                    if (lastOperator != "") {
+                        numTwo = parseInt(numTwo);
+                        currentResult = operate(lastOperator, numOne, numTwo);
+                        display.textContent = currentResult;
+                        numOne = currentResult;
+                        numTwo = "";
+                        lastOperator = "+";
+                        break;
+                    };
+
+                    if (currentOperator == "") {
+                        currentOperator = "+";
+                        numOne = parseInt(numOne);
+                    } else {
+                        currentOperator = "+";
+                        numTwo = parseInt(numTwo);
+                        currentResult = operate(currentOperator, numOne, numTwo);
+                        display.textContent = currentResult;
+                        numOne = currentResult;
+                        numTwo = "";
+                    };
+
+                    lastOperator = "+";
                     break;
-                case "-":
-                    currentOperator = "-";
+
+                case "minus":
+                    if (lastOperator != "") {
+                        numTwo = parseInt(numTwo);
+                        currentResult = operate(lastOperator, numOne, numTwo);
+                        display.textContent = currentResult;
+                        numOne = currentResult;
+                        numTwo = "";
+                        lastOperator = "-";
+                        break;
+                    };
+
+                    if (currentOperator == "") {
+                        currentOperator = "-";
+                        numOne = parseInt(numOne);
+                    } else {
+                        currentOperator = "-";
+                        numTwo = parseInt(numTwo);
+                        currentResult = operate(currentOperator, numOne, numTwo);
+                        display.textContent = currentResult;
+                        numOne = currentResult;
+                        numTwo = "";
+                    };
+
+                    lastOperator = "-";
                     break;
-                case "x":
-                    currentOperator = "*";
+                    
+                case "multiply":
+                    if (lastOperator != "") {
+                        numTwo = parseInt(numTwo);
+                        currentResult = operate(lastOperator, numOne, numTwo);
+                        display.textContent = currentResult;
+                        numOne = currentResult;
+                        numTwo = "";
+                        lastOperator = "*";
+                        break;
+                    };
+
+                    if (currentOperator == "") {
+                        currentOperator = "*";
+                        numOne = parseInt(numOne);
+                    } else {
+                        currentOperator = "*";
+                        numTwo = parseInt(numTwo);
+                        currentResult = operate(currentOperator, numOne, numTwo);
+                        display.textContent = currentResult;
+                        numOne = currentResult;
+                        numTwo = "";
+                    };
+
+                    lastOperator = "*";
                     break;
-                case "/":
-                    currentOperator = "/";
+
+                case "divide":
+                    if (lastOperator != "") {
+                        numTwo = parseInt(numTwo);
+                        currentResult = operate(lastOperator, numOne, numTwo);
+                        display.textContent = currentResult;
+                        numOne = currentResult;
+                        numTwo = "";
+                        lastOperator = "/";
+                        break;
+                    };
+
+                    if (currentOperator == "") {
+                        currentOperator = "/";
+                        numOne = parseInt(numOne);
+                    } else {
+                        currentOperator = "/";
+                        numTwo = parseInt(numTwo);
+                        currentResult = operate(currentOperator, numOne, numTwo);
+                        display.textContent = currentResult;
+                        numOne = currentResult;
+                        numTwo = "";
+                    };
+
+                    lastOperator = "/";
+                    break;
+
+                case "equals":
+                    if (numOne == "" || lastOperator == "=") {
+                        break;
+                    } else {
+                        numTwo = parseInt(numTwo);
+                        currentResult = operate(currentOperator, numOne, numTwo);
+                        display.textContent = currentResult;
+                        numOne = currentResult;
+                        numTwo = "";
+                        currentOperator = "";
+                        lastOperator = "=";
+                    };
                     break;
             };
         });
     });
 
+    // Function button listener
     buttonFunctions.forEach(button => {
         button.addEventListener("click", (e) => {
             switch (e.target.id) {
                 case "clear":
                     display.textContent = "";
+                    currentOperator = "";
+                    lastOperator = "";
+                    numOne = "";
+                    numTwo = "";
                     break;
                 case "plusminus":
                     if (display.textContent[0] == "-") {
@@ -118,6 +297,10 @@ function main() {
                         display.textContent = "-" + display.textContent;
                         break;
                     };
+                case "percent":
+                    currentOperator = "%";
+                    display.textContent = percentage(parseInt(display.textContent));
+                    break;
             };
         });
     });

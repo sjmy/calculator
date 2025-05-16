@@ -89,7 +89,6 @@ function isText(input) {
 
 // Contains event listeners, currentInput variable, all variables required for operations.
 function main() {
-    const operators = "+-*/";
     const display = document.querySelector(".display");
     const buttonNums = document.querySelectorAll(".button-num");
     const buttonOperators = document.querySelectorAll(".button-operator");
@@ -213,7 +212,7 @@ function main() {
     };
 
     // Percent
-    function buttonPercentEvent(percent) {
+    function buttonPercentEvent() {
         if (currentInput == "") {
             return;
         };
@@ -267,7 +266,7 @@ function main() {
                 break;
 
             case "%":
-                buttonPercentEvent(e.key);
+                buttonPercentEvent();
                 break;
         };
         display.textContent = currentInput;
@@ -342,7 +341,7 @@ function main() {
                     break;
 
                 case "percent":
-                    buttonPercentEvent("%");
+                    buttonPercentEvent();
                     break;
             };
             display.textContent = currentInput;

@@ -100,178 +100,111 @@ function main() {
     let numOne = "";
     let numTwo = "";
 
+    // Receives event, sanitizes input, updates variables and display
+    function buttonNumsEvent(num) {
+        if (isText(currentInput)) {
+            currentInput = "";
+        };
+
+        if (operatorEntered(currentInput)) {
+            currentOperator = currentInput.slice(-1);
+            currentInput = currentInput.substring(0, currentInput.length - 1);
+            numOne = currentInput;
+            currentInput = "";
+        };
+        
+        if (currentInput.length <= 10) {
+            currentInput += `${num}`;
+        };
+    };
+
+    document.addEventListener("keydown", (e) => {
+        switch (e.key) {
+            case "0":
+                buttonNumsEvent(e.key);
+                break;
+
+            case "1":
+                buttonNumsEvent(e.key);
+                break;
+
+            case "2":
+                buttonNumsEvent(e.key);
+                break;
+
+            case "3":
+                buttonNumsEvent(e.key);
+                break;
+
+            case "4":
+                buttonNumsEvent(e.key);
+                break;
+
+            case "5":
+                buttonNumsEvent(e.key);
+                break;
+
+            case "6":
+                buttonNumsEvent(e.key);
+                break;
+
+            case "7":
+                buttonNumsEvent(e.key);
+                break;
+
+            case "8":
+                buttonNumsEvent(e.key);
+                break;
+
+            case "9":
+                buttonNumsEvent(e.key);
+                break;
+            };
+            display.textContent = currentInput;
+        });
+
     // Number button listener
     buttonNums.forEach(button => {
         button.addEventListener("click", (e) => {
             switch (e.target.id) {
                 case "zero":
-                    if (isText(currentInput)) {
-                        currentInput = "";
-                    };
+                    buttonNumsEvent("0");
+                break;
 
-                    if (operatorEntered(currentInput)) {
-                        currentOperator = currentInput.slice(-1);
-                        currentInput = currentInput.substring(0, currentInput.length - 1);
-                        numOne = currentInput;
-                        currentInput = "";
-                    };
-                    
-                    if (currentInput.length <= 10) {
-                        currentInput += "0";
-                    };
-                    break;
-
-                case "one":
-                    if (isText(currentInput)) {
-                        currentInput = "";
-                    };
-
-                    if (operatorEntered(currentInput)) {
-                        currentOperator = currentInput.slice(-1);
-                        currentInput = currentInput.substring(0, currentInput.length - 1);
-                        numOne = currentInput;
-                        currentInput = "";
-                    };
-
-                    if (currentInput.length <= 10) {
-                        currentInput += "1";
-                    };
+                case "1":
+                    buttonNumsEvent(e.target.id);
                     break;
                     
-                case "two":
-                    if (isText(currentInput)) {
-                        currentInput = "";
-                    };
-
-                    if (operatorEntered(currentInput)) {
-                        currentOperator = currentInput.slice(-1);
-                        currentInput = currentInput.substring(0, currentInput.length - 1);
-                        numOne = currentInput;
-                        currentInput = "";
-                    };
-
-                    if (currentInput.length <= 10) {
-                        currentInput += "2";
-                    };
+                case "2":
+                    buttonNumsEvent(e.target.id);
                     break;
 
-                case "three":
-                    if (isText(currentInput)) {
-                        currentInput = "";
-                    };
-
-                    if (operatorEntered(currentInput)) {
-                        currentOperator = currentInput.slice(-1);
-                        currentInput = currentInput.substring(0, currentInput.length - 1);
-                        numOne = currentInput;
-                        currentInput = "";
-                    };
-
-                    if (currentInput.length <= 10) {
-                        currentInput += "3";
-                    };
+                case "3":
+                    buttonNumsEvent(e.target.id);
                     break;
 
-                case "four":
-                    if (isText(currentInput)) {
-                        currentInput = "";
-                    };
-
-                    if (operatorEntered(currentInput)) {
-                        currentOperator = currentInput.slice(-1);
-                        currentInput = currentInput.substring(0, currentInput.length - 1);
-                        numOne += currentInput;
-                        currentInput = "";
-                    };
-
-                    if (currentInput.length <= 10) {
-                        currentInput += "4";
-                    };
+                case "4":
+                    buttonNumsEvent(e.target.id);
                     break;
 
-                case "five":
-                    if (isText(currentInput)) {
-                        currentInput = "";
-                    };
-
-                    if (operatorEntered(currentInput)) {
-                        currentOperator = currentInput.slice(-1);
-                        currentInput = currentInput.substring(0, currentInput.length - 1);
-                        numOne = currentInput;
-                        currentInput = "";
-                    };
-
-                    if (currentInput.length <= 10) {
-                        currentInput += "5";
-                    };
+                case "5":
+                    buttonNumsEvent(e.target.id);
                     break;
 
-                case "six":
-                    if (isText(currentInput)) {
-                        currentInput = "";
-                    };
-
-                    if (operatorEntered(currentInput)) {
-                        currentOperator = currentInput.slice(-1);
-                        currentInput = currentInput.substring(0, currentInput.length - 1);
-                        numOne = currentInput;
-                        currentInput = "";
-                    };
-
-                    if (currentInput.length <= 10) {
-                        currentInput += "6";
-                    };
+                case "6":
+                    buttonNumsEvent(e.target.id);
                     break;
 
-                case "seven":
-                    if (isText(currentInput)) {
-                        currentInput = "";
-                    };
-
-                    if (operatorEntered(currentInput)) {
-                        currentOperator = currentInput.slice(-1);
-                        currentInput = currentInput.substring(0, currentInput.length - 1);
-                        numOne = currentInput;
-                        currentInput = "";
-                    };
-
-                    if (currentInput.length <= 10) {
-                        currentInput += "7";
-                    };
+                case "7":
+                    buttonNumsEvent(e.target.id);
                     break;
 
-                case "eight":
-                    if (isText(currentInput)) {
-                        currentInput = "";
-                    };
-
-                    if (operatorEntered(currentInput)) {
-                        currentOperator = currentInput.slice(-1);
-                        currentInput = currentInput.substring(0, currentInput.length - 1);
-                        numOne = currentInput;
-                        currentInput = "";
-                    };
-
-                    if (currentInput.length <= 10) {
-                        currentInput += "8";
-                    };
+                case "8":
+                    buttonNumsEvent(e.target.id);
                     break;
 
-                case "nine":
-                    if (isText(currentInput)) {
-                        currentInput = "";
-                    };
-
-                    if (operatorEntered(currentInput)) {
-                        currentOperator = currentInput.slice(-1);
-                        currentInput = currentInput.substring(0, currentInput.length - 1);
-                        numOne = currentInput;
-                        currentInput = "";
-                    };
-
-                    if (currentInput.length <= 10) {
-                        currentInput += "9";
-                    };
+                case "9":
+                    buttonNumsEvent(e.target.id);
                     break;
 
                 case "dot":

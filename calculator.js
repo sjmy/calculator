@@ -100,7 +100,9 @@ function main() {
     let numOne = "";
     let numTwo = "";
 
-    // Receives event, sanitizes input, updates variables and display
+    // Event Functions
+    //
+    // Numbers. Receives event, sanitizes input, updates variables
     function buttonNumsEvent(num) {
         if (isText(currentInput)) {
             currentInput = "";
@@ -118,223 +120,209 @@ function main() {
         };
     };
 
+    // Dot gets its own function as the logic is a bit different
+    function buttonDotEvent(dot) {
+        if (isText(currentInput)) {
+            currentInput = "";
+        };
+
+        if (operatorEntered(currentInput)) {
+            let dotCheck = currentInput.slice(-1);
+
+            if (dotCheck != `${dot}`) {
+                currentOperator = currentInput.slice(-1);
+                currentInput = currentInput.substring(0, currentInput.length - 1);
+                numOne = currentInput;
+                currentInput = `0${dot}`;
+            };
+            return;
+        };
+
+        if (currentInput.toString().includes(`${dot}`)) {
+            return;
+        } else {
+            if (currentInput == "") {
+                currentInput += `0${dot}`;
+            } else {
+                currentInput += `${dot}`; 
+            };
+            
+        };
+    };
+
+    // Operators
+    function buttonOperatorsEvent(operator) {
+        if (currentInput == "") {
+            return;
+        };
+
+        if (operatorEntered(currentInput)) {
+            currentInput = currentInput.substring(0, currentInput.length - 1);
+        };
+
+        if (currentOperator != "") {
+            numTwo = currentInput;
+            currentInput = operate(currentOperator, numOne, numTwo);
+        };
+
+        currentInput += `${operator}`;
+    };
+
+    // Equals, return, and enter
+    function buttonEqualsEvent() {
+        if (currentInput == "") {
+            return;
+        };
+
+        if (operatorEntered(currentInput)) {
+            currentInput = currentInput.substring(0, currentInput.length - 1);
+        };
+
+        if (currentOperator != "") {
+            numTwo = currentInput;
+            let response = operate(currentOperator, numOne, numTwo);
+
+            if (response == "No thank you") {
+                currentInput = response;
+            } else {
+                currentInput = parseFloat(response);
+            };
+        };
+
+        numOne = currentInput;
+        numTwo = "";
+        currentOperator = "";
+    };
+
+    // Clear
+    function buttonClearEvent() {
+        currentInput = "";
+        currentOperator = "";
+        numOne = "";
+        numTwo = "";
+        display.textContent = currentInput;
+    };
+
+    // Plus/minus
+    function buttonPlusMinusEvent(minus) {
+        if (currentInput[0] == `${minus}`) {
+            currentInput = currentInput.substring(1, currentInput.length);
+        } else {
+            currentInput = `${minus}` + currentInput;
+        };
+    };
+
+    // Percent
+    function buttonPercentEvent(percent) {
+        if (currentInput == "") {
+            return;
+        };
+
+        if (operatorEntered(currentInput)) {
+            currentInput = currentInput.substring(0, currentInput.length - 1);
+        };
+
+        currentInput = percentage(currentInput);
+    };
+
+    // Event Listeners
+    //
+    // Keydown listener
     document.addEventListener("keydown", (e) => {
         switch (e.key) {
             case "0":
-                buttonNumsEvent(e.key);
-                break;
-
             case "1":
-                buttonNumsEvent(e.key);
-                break;
-
             case "2":
-                buttonNumsEvent(e.key);
-                break;
-
             case "3":
-                buttonNumsEvent(e.key);
-                break;
-
             case "4":
-                buttonNumsEvent(e.key);
-                break;
-
             case "5":
-                buttonNumsEvent(e.key);
-                break;
-
             case "6":
-                buttonNumsEvent(e.key);
-                break;
-
             case "7":
-                buttonNumsEvent(e.key);
-                break;
-
             case "8":
-                buttonNumsEvent(e.key);
-                break;
-
             case "9":
                 buttonNumsEvent(e.key);
                 break;
-            };
-            display.textContent = currentInput;
-        });
 
-    // Number button listener
+            case ".":
+                buttonDotEvent(e.key);
+                break;
+
+            case "+":
+            case "-":
+            case "*":
+            case "/":
+                buttonOperatorsEvent(e.key);
+                break;
+
+            case "=":
+            case "Enter":
+                buttonEqualsEvent();
+                break;
+
+            case "A":
+            case "a":
+            case "C":
+            case "c":
+                buttonClearEvent();
+                break;
+
+            case "%":
+                buttonPercentEvent(e.key);
+                break;
+        };
+        display.textContent = currentInput;
+    });
+
+    // Click listener for number and dot buttons
     buttonNums.forEach(button => {
         button.addEventListener("click", (e) => {
             switch (e.target.id) {
                 case "zero":
                     buttonNumsEvent("0");
-                break;
-
-                case "1":
-                    buttonNumsEvent(e.target.id);
                     break;
-                    
+
+                case "1":    
                 case "2":
-                    buttonNumsEvent(e.target.id);
-                    break;
-
                 case "3":
-                    buttonNumsEvent(e.target.id);
-                    break;
-
                 case "4":
-                    buttonNumsEvent(e.target.id);
-                    break;
-
                 case "5":
-                    buttonNumsEvent(e.target.id);
-                    break;
-
                 case "6":
-                    buttonNumsEvent(e.target.id);
-                    break;
-
                 case "7":
-                    buttonNumsEvent(e.target.id);
-                    break;
-
                 case "8":
-                    buttonNumsEvent(e.target.id);
-                    break;
-
                 case "9":
                     buttonNumsEvent(e.target.id);
                     break;
 
                 case "dot":
-                    if (isText(currentInput)) {
-                        currentInput = "";
-                    };
-
-                    if (operatorEntered(currentInput)) {
-                        let dotCheck = currentInput.slice(-1);
-
-                        if (dotCheck != ".") {
-                            currentOperator = currentInput.slice(-1);
-                            currentInput = currentInput.substring(0, currentInput.length - 1);
-                            numOne = currentInput;
-                            currentInput = "0.";
-                        };
-                        break;
-                    };
-
-                    if (currentInput.includes(".")) {
-                        break;
-                    } else {
-                        if (currentInput == "") {
-                            currentInput += "0."
-                        } else {
-                            currentInput += "."; 
-                        };
-                        
-                    };
+                    buttonDotEvent(".");
                     break;
             };
             display.textContent = currentInput;
         });
     });
 
-    // Operator button listener
+    // Click listener for operator buttons
     buttonOperators.forEach(button => {
         button.addEventListener("click", (e) => {
             switch (e.target.id) {
                 case "plus":
-                    if (currentInput == "") {
-                        break;
-                    };
-
-                    if (operatorEntered(currentInput)) {
-                        currentInput = currentInput.substring(0, currentInput.length - 1);
-                    };
-
-                    if (currentOperator != "") {
-                        numTwo = currentInput;
-                        currentInput = operate(currentOperator, numOne, numTwo);
-                    };
-
-                    currentInput += "+";
+                    buttonOperatorsEvent("+");
                     break;
 
                 case "minus":
-                    if (currentInput == "") {
-                        break;
-                    };
-
-                    if (operatorEntered(currentInput)) {
-                        currentInput = currentInput.substring(0, currentInput.length - 1);
-                    };
-
-                    if (currentOperator != "") {
-                        numTwo = currentInput;
-                        currentInput = operate(currentOperator, numOne, numTwo);
-                    };
-                    
-                    currentInput += "-";
+                    buttonOperatorsEvent("-");
                     break;
                     
                 case "multiply":
-                    if (currentInput == "") {
-                        break;
-                    };
-
-                    if (operatorEntered(currentInput)) {
-                        currentInput = currentInput.substring(0, currentInput.length - 1);
-                    };
-
-                    if (currentOperator != "") {
-                        numTwo = currentInput;
-                        currentInput = operate(currentOperator, numOne, numTwo);
-                    };
-                    
-                    currentInput += "*";
+                    buttonOperatorsEvent("*");
                     break;
 
                 case "divide":
-                    if (currentInput == "") {
-                        break;
-                    };
-
-                    if (operatorEntered(currentInput)) {
-                        currentInput = currentInput.substring(0, currentInput.length - 1);
-                    };
-
-                    if (currentOperator != "") {
-                        numTwo = currentInput;
-                        currentInput = operate(currentOperator, numOne, numTwo);
-                    };
-                    
-                    currentInput += "/";
+                    buttonOperatorsEvent("/");
                     break;
 
                 case "equals":
-                    if (currentInput == "") {
-                        break;
-                    };
-
-                    if (operatorEntered(currentInput)) {
-                        currentInput = currentInput.substring(0, currentInput.length - 1);
-                    };
-
-                    if (currentOperator != "") {
-                        numTwo = currentInput;
-                        let response = operate(currentOperator, numOne, numTwo);
-
-                        if (response == "No thank you") {
-                            currentInput = response;
-                        } else {
-                            currentInput = parseFloat(response);
-                        };
-                    };
-
-                    numOne = currentInput;
-                    numTwo = "";
-                    currentOperator = "";
+                    buttonEqualsEvent();
                     break;
             };
             display.textContent = currentInput;
@@ -346,31 +334,15 @@ function main() {
         button.addEventListener("click", (e) => {
             switch (e.target.id) {
                 case "clear":
-                    currentInput = "";
-                    currentOperator = "";
-                    numOne = "";
-                    numTwo = "";
-                    display.textContent = currentInput;
+                    buttonClearEvent();
                     break;
 
                 case "plusminus":
-                    if (currentInput[0] == "-") {
-                        currentInput = currentInput.substring(1, currentInput.length);
-                    } else {
-                        currentInput = "-" + currentInput;
-                    };
+                    buttonPlusMinusEvent("-");
                     break;
 
                 case "percent":
-                    if (currentInput == "") {
-                        break;
-                    };
-
-                    if (operatorEntered(currentInput)) {
-                        currentInput = currentInput.substring(0, currentInput.length - 1);
-                    };
-
-                    currentInput = percentage(currentInput);
+                    buttonPercentEvent("%");
                     break;
             };
             display.textContent = currentInput;

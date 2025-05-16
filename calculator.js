@@ -57,7 +57,7 @@ function operate(operator, numOne, numTwo) {
         case "*":
             return multiply(parseFloat(numOne), parseFloat(numTwo));
         case "/":
-            if (parseInt(numTwo) == 0) {
+            if (parseFloat(numTwo) == 0) {
                 let divideByZero = "No thank you";
                 return divideByZero;
             } else {

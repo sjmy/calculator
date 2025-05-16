@@ -1,48 +1,102 @@
-// Operator functions
+// Calculator
+//
+// Basic calculator created using Javascript, HTML, and CSS.
+// Addition, subtraction, division, multiplication, percentage. Decimal and negative number support.
+//
+// User entries are placed in an ongoing string variable (currentInput) and sanitized after every input.
+
+
+// Operator functions. If return value has decimals, slices to max display length.
 function add(x, y) {
-    return x + y;
+    if (x + y === Math.floor(x + y) || (x + y).toString().length <= 11) {
+        return x + y;
+    } else {
+        return parseFloat((x + y).toString().slice(0, 11));
+    };
 };
 
 function subtract(x, y) {
-    return x - y;
+    if (x - y === Math.floor(x - y) || (x - y).toString().length <= 11) {
+        return x - y;
+    } else {
+        return parseFloat((x - y).toString().slice(0, 11));
+    };
 };
 
 function multiply(x, y) {
-    return x * y;
+    if (x * y === Math.floor(x * y) || (x * y).toString().length <= 11) {
+        return x * y;
+    } else {
+        return parseFloat((x * y).toString().slice(0, 11));
+    };
 };
 
 function divide(x, y) {
-    return x / y;
+    if (x / y === Math.floor(x / y) || (x / y).toString().length <= 11) {
+        return x / y;
+    } else {
+        return parseFloat((x / y).toString().slice(0, 11));
+    };
 };
 
 function percentage(num) {
-    return num / 100;
+    if (num / 100 === Math.floor(num / 100) || (num / 100).toString().length <= 11) {
+        return num / 100;
+    } else {
+        return parseFloat((num / 100).toString().slice(0, 11));
+    };
 }
-
 
 // Operation delegation
 function operate(operator, numOne, numTwo) {
     switch (operator) {
         case "+":
-            return add(numOne, numTwo);
+            return add(parseFloat(numOne), parseFloat(numTwo));
         case "-":
-            return subtract(numOne, numTwo);
+            return subtract(parseFloat(numOne), parseFloat(numTwo));
         case "*":
-            return multiply(numOne, numTwo);
+            return multiply(parseFloat(numOne), parseFloat(numTwo));
         case "/":
-            return divide(numOne, numTwo);
+            if (parseInt(numTwo) == 0) {
+                let divideByZero = "No thank you";
+                return divideByZero;
+            } else {
+                return divide(parseFloat(numOne), parseFloat(numTwo));
+            };
     };
 };
 
+// Checks the end of the display to see if an operator has been entered
+function operatorEntered(input) {
+    if (input[input.length - 1] == "+" ||
+        input[input.length - 1] == "-" ||
+        input[input.length - 1] == "*" ||
+        input[input.length - 1] == "/") {
+        return true;
+    };
+    
+    return false;
+};
+
+// Checks if there is text displayed (ie did the user just try to divide by 0?)
+function isText(input) {
+    if (input == "No thank you") {
+        return true;
+    };
+
+    return false;
+};
+
+// Contains event listeners, currentInput variable, all variables required for operations.
 function main() {
+    const operators = "+-*/";
     const display = document.querySelector(".display");
     const buttonNums = document.querySelectorAll(".button-num");
     const buttonOperators = document.querySelectorAll(".button-operator");
     const buttonFunctions = document.querySelectorAll(".button-top");
 
+    let currentInput = "";
     let currentOperator = "";
-    let lastOperator = "";
-    let currentResult = "";
     let numOne = "";
     let numTwo = "";
 
@@ -51,104 +105,205 @@ function main() {
         button.addEventListener("click", (e) => {
             switch (e.target.id) {
                 case "zero":
-                    if (numOne == "" || currentOperator == "") {
-                        numOne += "0";
-                        display.textContent = numOne;
-                    } else {
-                        numTwo += "0";
-                        display.textContent = numTwo;
+                    if (isText(currentInput)) {
+                        currentInput = "";
                     };
-                    break;
-                case "one":
-                    if (numOne == "" || currentOperator == "") {
-                        numOne += "1";
-                        display.textContent = numOne;
-                    } else {
-                        numTwo += "1";
-                        display.textContent = numTwo;
-                    };
-                    break;
-                case "two":
-                    if (numOne == "" || currentOperator == "") {
-                        numOne += "2";
-                        display.textContent = numOne;
-                    } else {
-                        numTwo += "2";
-                        display.textContent = numTwo;
-                    };
-                    break;
-                case "three":
-                    if (numOne == "" || currentOperator == "") {
-                        numOne += "3";
-                        display.textContent = numOne;
-                    } else {
-                        numTwo += "3";
-                        display.textContent = numTwo;
-                    };
-                    break;
-                case "four":
-                    if (numOne == "" || currentOperator == "") {
-                        numOne += "4";
-                        display.textContent = numOne;
-                    } else {
-                        numTwo += "4";
-                        display.textContent = numTwo;
-                    };
-                    break;
-                case "five":
-                    if (numOne == "" || currentOperator == "") {
-                        numOne += "5";
-                        display.textContent = numOne;
-                    } else {
-                        numTwo += "5";
-                        display.textContent = numTwo;
-                    };
-                    break;
-                case "six":
-                    if (numOne == "" || currentOperator == "") {
-                        numOne += "6";
-                        display.textContent = numOne;
-                    } else {
-                        numTwo += "6";
-                        display.textContent = numTwo;
-                    };
-                    break;
-                case "seven":
-                    if (numOne == "" || currentOperator == "") {
-                        numOne += "7";
-                        display.textContent = numOne;
-                    } else {
-                        numTwo += "7";
-                        display.textContent = numTwo;
-                    };
-                    break;
-                case "eight":
-                    if (numOne == "" || currentOperator == "") {
-                        numOne += "8";
-                        display.textContent = numOne;
-                    } else {
-                        numTwo += "8";
-                        display.textContent = numTwo;
-                    };
-                    break;
-                case "nine":
-                    if (numOne == "" || currentOperator == "") {
-                        numOne += "9";
-                        display.textContent = numOne;
-                    } else {
-                        numTwo += "9";
-                        display.textContent = numTwo;
-                    };
-                    break;
-                case "dot":
-                    if (display.textContent.includes(".")) {
-                        break;
-                    } else {
-                        display.textContent += ".";
-                        break;
+
+                    if (operatorEntered(currentInput)) {
+                        currentOperator = currentInput.slice(-1);
+                        currentInput = currentInput.substring(0, currentInput.length - 1);
+                        numOne = currentInput;
+                        currentInput = "";
                     };
                     
+                    if (currentInput.length <= 10) {
+                        currentInput += "0";
+                    };
+                    break;
+
+                case "one":
+                    if (isText(currentInput)) {
+                        currentInput = "";
+                    };
+
+                    if (operatorEntered(currentInput)) {
+                        currentOperator = currentInput.slice(-1);
+                        currentInput = currentInput.substring(0, currentInput.length - 1);
+                        numOne = currentInput;
+                        currentInput = "";
+                    };
+
+                    if (currentInput.length <= 10) {
+                        currentInput += "1";
+                    };
+                    break;
+                    
+                case "two":
+                    if (isText(currentInput)) {
+                        currentInput = "";
+                    };
+
+                    if (operatorEntered(currentInput)) {
+                        currentOperator = currentInput.slice(-1);
+                        currentInput = currentInput.substring(0, currentInput.length - 1);
+                        numOne = currentInput;
+                        currentInput = "";
+                    };
+
+                    if (currentInput.length <= 10) {
+                        currentInput += "2";
+                    };
+                    break;
+
+                case "three":
+                    if (isText(currentInput)) {
+                        currentInput = "";
+                    };
+
+                    if (operatorEntered(currentInput)) {
+                        currentOperator = currentInput.slice(-1);
+                        currentInput = currentInput.substring(0, currentInput.length - 1);
+                        numOne = currentInput;
+                        currentInput = "";
+                    };
+
+                    if (currentInput.length <= 10) {
+                        currentInput += "3";
+                    };
+                    break;
+
+                case "four":
+                    if (isText(currentInput)) {
+                        currentInput = "";
+                    };
+
+                    if (operatorEntered(currentInput)) {
+                        currentOperator = currentInput.slice(-1);
+                        currentInput = currentInput.substring(0, currentInput.length - 1);
+                        numOne += currentInput;
+                        currentInput = "";
+                    };
+
+                    if (currentInput.length <= 10) {
+                        currentInput += "4";
+                    };
+                    break;
+
+                case "five":
+                    if (isText(currentInput)) {
+                        currentInput = "";
+                    };
+
+                    if (operatorEntered(currentInput)) {
+                        currentOperator = currentInput.slice(-1);
+                        currentInput = currentInput.substring(0, currentInput.length - 1);
+                        numOne = currentInput;
+                        currentInput = "";
+                    };
+
+                    if (currentInput.length <= 10) {
+                        currentInput += "5";
+                    };
+                    break;
+
+                case "six":
+                    if (isText(currentInput)) {
+                        currentInput = "";
+                    };
+
+                    if (operatorEntered(currentInput)) {
+                        currentOperator = currentInput.slice(-1);
+                        currentInput = currentInput.substring(0, currentInput.length - 1);
+                        numOne = currentInput;
+                        currentInput = "";
+                    };
+
+                    if (currentInput.length <= 10) {
+                        currentInput += "6";
+                    };
+                    break;
+
+                case "seven":
+                    if (isText(currentInput)) {
+                        currentInput = "";
+                    };
+
+                    if (operatorEntered(currentInput)) {
+                        currentOperator = currentInput.slice(-1);
+                        currentInput = currentInput.substring(0, currentInput.length - 1);
+                        numOne = currentInput;
+                        currentInput = "";
+                    };
+
+                    if (currentInput.length <= 10) {
+                        currentInput += "7";
+                    };
+                    break;
+
+                case "eight":
+                    if (isText(currentInput)) {
+                        currentInput = "";
+                    };
+
+                    if (operatorEntered(currentInput)) {
+                        currentOperator = currentInput.slice(-1);
+                        currentInput = currentInput.substring(0, currentInput.length - 1);
+                        numOne = currentInput;
+                        currentInput = "";
+                    };
+
+                    if (currentInput.length <= 10) {
+                        currentInput += "8";
+                    };
+                    break;
+
+                case "nine":
+                    if (isText(currentInput)) {
+                        currentInput = "";
+                    };
+
+                    if (operatorEntered(currentInput)) {
+                        currentOperator = currentInput.slice(-1);
+                        currentInput = currentInput.substring(0, currentInput.length - 1);
+                        numOne = currentInput;
+                        currentInput = "";
+                    };
+
+                    if (currentInput.length <= 10) {
+                        currentInput += "9";
+                    };
+                    break;
+
+                case "dot":
+                    if (isText(currentInput)) {
+                        currentInput = "";
+                    };
+
+                    if (operatorEntered(currentInput)) {
+                        let dotCheck = currentInput.slice(-1);
+
+                        if (dotCheck != ".") {
+                            currentOperator = currentInput.slice(-1);
+                            currentInput = currentInput.substring(0, currentInput.length - 1);
+                            numOne = currentInput;
+                            currentInput = "0.";
+                        };
+                        break;
+                    };
+
+                    if (currentInput.includes(".")) {
+                        break;
+                    } else {
+                        if (currentInput == "") {
+                            currentInput += "0."
+                        } else {
+                            currentInput += "."; 
+                        };
+                        
+                    };
+                    break;
             };
+            display.textContent = currentInput;
         });
     });
 
@@ -157,123 +312,99 @@ function main() {
         button.addEventListener("click", (e) => {
             switch (e.target.id) {
                 case "plus":
-                    if (lastOperator != "") {
-                        numTwo = parseInt(numTwo);
-                        currentResult = operate(lastOperator, numOne, numTwo);
-                        display.textContent = currentResult;
-                        numOne = currentResult;
-                        numTwo = "";
-                        lastOperator = "+";
+                    if (currentInput == "") {
                         break;
                     };
 
-                    if (currentOperator == "") {
-                        currentOperator = "+";
-                        numOne = parseInt(numOne);
-                    } else {
-                        currentOperator = "+";
-                        numTwo = parseInt(numTwo);
-                        currentResult = operate(currentOperator, numOne, numTwo);
-                        display.textContent = currentResult;
-                        numOne = currentResult;
-                        numTwo = "";
+                    if (operatorEntered(currentInput)) {
+                        currentInput = currentInput.substring(0, currentInput.length - 1);
                     };
 
-                    lastOperator = "+";
+                    if (currentOperator != "") {
+                        numTwo = currentInput;
+                        currentInput = operate(currentOperator, numOne, numTwo);
+                    };
+
+                    currentInput += "+";
                     break;
 
                 case "minus":
-                    if (lastOperator != "") {
-                        numTwo = parseInt(numTwo);
-                        currentResult = operate(lastOperator, numOne, numTwo);
-                        display.textContent = currentResult;
-                        numOne = currentResult;
-                        numTwo = "";
-                        lastOperator = "-";
+                    if (currentInput == "") {
                         break;
                     };
 
-                    if (currentOperator == "") {
-                        currentOperator = "-";
-                        numOne = parseInt(numOne);
-                    } else {
-                        currentOperator = "-";
-                        numTwo = parseInt(numTwo);
-                        currentResult = operate(currentOperator, numOne, numTwo);
-                        display.textContent = currentResult;
-                        numOne = currentResult;
-                        numTwo = "";
+                    if (operatorEntered(currentInput)) {
+                        currentInput = currentInput.substring(0, currentInput.length - 1);
                     };
 
-                    lastOperator = "-";
+                    if (currentOperator != "") {
+                        numTwo = currentInput;
+                        currentInput = operate(currentOperator, numOne, numTwo);
+                    };
+                    
+                    currentInput += "-";
                     break;
                     
                 case "multiply":
-                    if (lastOperator != "") {
-                        numTwo = parseInt(numTwo);
-                        currentResult = operate(lastOperator, numOne, numTwo);
-                        display.textContent = currentResult;
-                        numOne = currentResult;
-                        numTwo = "";
-                        lastOperator = "*";
+                    if (currentInput == "") {
                         break;
                     };
 
-                    if (currentOperator == "") {
-                        currentOperator = "*";
-                        numOne = parseInt(numOne);
-                    } else {
-                        currentOperator = "*";
-                        numTwo = parseInt(numTwo);
-                        currentResult = operate(currentOperator, numOne, numTwo);
-                        display.textContent = currentResult;
-                        numOne = currentResult;
-                        numTwo = "";
+                    if (operatorEntered(currentInput)) {
+                        currentInput = currentInput.substring(0, currentInput.length - 1);
                     };
 
-                    lastOperator = "*";
+                    if (currentOperator != "") {
+                        numTwo = currentInput;
+                        currentInput = operate(currentOperator, numOne, numTwo);
+                    };
+                    
+                    currentInput += "*";
                     break;
 
                 case "divide":
-                    if (lastOperator != "") {
-                        numTwo = parseInt(numTwo);
-                        currentResult = operate(lastOperator, numOne, numTwo);
-                        display.textContent = currentResult;
-                        numOne = currentResult;
-                        numTwo = "";
-                        lastOperator = "/";
+                    if (currentInput == "") {
                         break;
                     };
 
-                    if (currentOperator == "") {
-                        currentOperator = "/";
-                        numOne = parseInt(numOne);
-                    } else {
-                        currentOperator = "/";
-                        numTwo = parseInt(numTwo);
-                        currentResult = operate(currentOperator, numOne, numTwo);
-                        display.textContent = currentResult;
-                        numOne = currentResult;
-                        numTwo = "";
+                    if (operatorEntered(currentInput)) {
+                        currentInput = currentInput.substring(0, currentInput.length - 1);
                     };
 
-                    lastOperator = "/";
+                    if (currentOperator != "") {
+                        numTwo = currentInput;
+                        currentInput = operate(currentOperator, numOne, numTwo);
+                    };
+                    
+                    currentInput += "/";
                     break;
 
                 case "equals":
-                    if (numOne == "" || lastOperator == "=") {
+                    if (currentInput == "") {
                         break;
-                    } else {
-                        numTwo = parseInt(numTwo);
-                        currentResult = operate(currentOperator, numOne, numTwo);
-                        display.textContent = currentResult;
-                        numOne = currentResult;
-                        numTwo = "";
-                        currentOperator = "";
-                        lastOperator = "=";
                     };
+
+                    if (operatorEntered(currentInput)) {
+                        currentInput = currentInput.substring(0, currentInput.length - 1);
+                    };
+
+                    if (currentOperator != "") {
+                        numTwo = currentInput;
+                        let response = operate(currentOperator, numOne, numTwo);
+
+                        if (response == "No thank you") {
+                            currentInput = response;
+                        } else {
+                            currentInput = parseFloat(response);
+                        };
+                    };
+
+                    numOne = currentInput;
+                    numTwo = "";
+                    currentOperator = "";
                     break;
             };
+            display.textContent = currentInput;
         });
     });
 
@@ -282,26 +413,34 @@ function main() {
         button.addEventListener("click", (e) => {
             switch (e.target.id) {
                 case "clear":
-                    display.textContent = "";
+                    currentInput = "";
                     currentOperator = "";
-                    lastOperator = "";
                     numOne = "";
                     numTwo = "";
+                    display.textContent = currentInput;
                     break;
+
                 case "plusminus":
-                    if (display.textContent[0] == "-") {
-                        let removeMinus = display.textContent.slice(1);
-                        display.textContent = removeMinus;
-                        break;
+                    if (currentInput[0] == "-") {
+                        currentInput = currentInput.substring(1, currentInput.length);
                     } else {
-                        display.textContent = "-" + display.textContent;
+                        currentInput = "-" + currentInput;
+                    };
+                    break;
+
+                case "percent":
+                    if (currentInput == "") {
                         break;
                     };
-                case "percent":
-                    currentOperator = "%";
-                    display.textContent = percentage(parseInt(display.textContent));
+
+                    if (operatorEntered(currentInput)) {
+                        currentInput = currentInput.substring(0, currentInput.length - 1);
+                    };
+
+                    currentInput = percentage(currentInput);
                     break;
             };
+            display.textContent = currentInput;
         });
     });
 };
